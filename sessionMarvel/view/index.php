@@ -3,7 +3,13 @@ require_once(__DIR__ . "/../controller/HeroiController.php");
 
 $heroiCont = new HeroiController();
 
-$heroiCont->remover();
+$heroiCont->exibir();
 
-header("Location: form.php")
+
+
+/*
+ERROS NÃO APARECEM
+ALTERAR TEM QUE FAZER
+MENU TEM QUE FAZER
+*/
 ?>

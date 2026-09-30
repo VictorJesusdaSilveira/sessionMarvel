@@ -10,27 +10,43 @@ class HeroiController{
         session_start();
     }
 
-    public function salvar(string $nome){
-        $_SESSION["heroi"] = new Heroi($nome);
+    public function salvar(string $nome, string $poder, string $origem,){
+        if($_POST["heroi"]){
+            return "Um herói ja está cadastrado, remova-o para adicionar outro";
+        }
+
+        $heroi = new Heroi($nome, $poder, $origem);
+        $erros = $this->heroiService->validar($heroi);
+
+        if(empty($erros)){
+            $_SESSION["heroi"] = $heroi;
+        }
+
+        return $erros;
     }
 
     public function exibir(){
-        print $_SESSION["heroi"]->getNome();
+        if(! isset($_SESSION["heroi"])){
+            return "Sessão não existe!";
+        }
+        $heroi = $_SESSION["heroi"];
+        $erros = $this->heroiService->validar($heroi);
+
+        if (!empty($erros)) {
+            return $erros;
+        }
+        return $heroi->getNome() . "|" . $heroi->getPoder() . "|" . $heroi->getOrigem();
     }
 
     public function remover(){
+        session_unset();
+        session_destroy();
 
     }
 
-    public function alterar(){
-        
+    public function alterar(){ 
+     
     }
-
-
 
 }
-
-
-
-
 ?>
